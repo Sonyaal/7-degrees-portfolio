@@ -32,7 +32,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; j
 /* HERO */
 .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 58px; }
 .hero-l { display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 5rem 5rem; }
-.hero-r { background: var(--g0); display: flex; flex-direction: column; justify-content: flex-end; padding: 5rem 4rem; position: relative; overflow: hidden; }
+.hero-r { background: var(--g0); display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem; position: relative; overflow: hidden; }
 .hero-r::after { content: '7°'; position: absolute; bottom: -0.2em; right: -0.05em; font-family: var(--serif); font-size: 24rem; line-height: 1; color: rgba(255,255,255,0.03); pointer-events: none; user-select: none; }
 
 .eyebrow { display: flex; align-items: center; gap: 0.75rem; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--g4); margin-bottom: 1.8rem; }
@@ -67,29 +67,16 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; j
 .sec-h.lt { color: #fff; }
 .sec-h.lt em { color: var(--g6); }
 
-/* ABOUT */
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 3rem; }
-.al { padding-right: 5rem; border-right: 1px solid var(--rule); }
-.ar { padding-left: 5rem; display: flex; flex-direction: column; gap: 1.5rem; }
-
-.a-name { font-family: var(--serif); font-size: 4.5rem; font-weight: 400; line-height: 0.95; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 0.5rem; }
-.a-badge { display: inline-block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g3); background: var(--g8); border: 1px solid var(--g7); padding: 0.35rem 0.9rem; border-radius: 999px; margin-bottom: 2rem; }
-.a-bio { font-size: 1rem; font-weight: 300; color: var(--ink2); line-height: 1.85; margin-bottom: 1.5rem; }
-.a-bio strong { font-weight: 500; color: var(--ink); }
-
-.skills-h { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink4); margin-bottom: 0.9rem; margin-top: 1rem; }
-.skills-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-.sk { font-size: 0.76rem; padding: 0.35rem 0.85rem; border: 1px solid var(--rule); color: var(--ink2); background: var(--paper); }
-
-.xp-card { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.5rem; border: 1px solid var(--rule); transition: border-color .2s, background .2s; }
-.xp-card:hover { border-color: var(--g7); background: var(--g8); }
-.xp-logo { width: 38px; height: 38px; border-radius: 8px; display: grid; place-items: center; flex-shrink: 0; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; color: #fff; }
-.xp-c { flex: 1; }
-.xp-role { font-size: 0.87rem; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
-.xp-co { font-size: 0.76rem; color: var(--ink3); }
-.xp-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: 999px; white-space: nowrap; }
-.xp-tag.up { background: var(--g8); color: var(--g2); border: 1px solid var(--g7); }
-.xp-tag.pr { background: var(--cream); color: var(--ink3); border: 1px solid var(--rule); }
+/* HERO EXPERIENCE */
+.hero-exp { display: flex; flex-direction: column; position: relative; z-index: 1; width: 100%; }
+.hxp-item { display: flex; align-items: center; gap: 1.1rem; padding: 0.95rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.hxp-item:last-child { border-bottom: none; }
+.hxp-logo { width: 34px; height: 34px; border-radius: 7px; object-fit: contain; background: rgba(255,255,255,0.93); padding: 3px; flex-shrink: 0; }
+.hxp-c { flex: 1; min-width: 0; }
+.hxp-role { font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.82); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hxp-co { font-size: 0.68rem; color: rgba(255,255,255,0.3); margin-top: 0.12rem; }
+.hxp-date { font-size: 0.64rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.28); white-space: nowrap; flex-shrink: 0; }
+.hxp-date.act { color: var(--g6); }
 
 /* PROBLEM */
 .prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 3.5rem; background: rgba(255,255,255,0.05); }
@@ -209,6 +196,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; j
 .rv.d2 { transition-delay: .2s; }
 .rv.d3 { transition-delay: .3s; }
 
+
 @media (max-width: 900px) {
   nav { padding: 0 1.5rem; }
   .nav-links { gap: 1.2rem; }
@@ -216,9 +204,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; j
   .hero-r { display: none; }
   .hero-l { padding: 5rem 2rem 4rem; }
   .sec { padding: 5rem 2rem; }
-  .about-grid { grid-template-columns: 1fr; }
-  .al { padding-right: 0; border-right: none; border-bottom: 1px solid var(--rule); padding-bottom: 3rem; }
-  .ar { padding-left: 0; }
   .prob-grid, .feats, .role-grid, .wn-grid, .fin-grid, .contact-split { grid-template-columns: 1fr; }
   .ft { border-right: none; border-bottom: 1px solid var(--rule); }
   .fc { border-right: none; border-bottom: 1px solid var(--rule); }
@@ -237,7 +222,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; j
 <nav>
   <div class="nav-name">Sonya <span class="ndot"></span></div>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
     <li><a href="#project">Project</a></li>
     <li><a href="#role">My Role</a></li>
     <li><a href="#market">Market</a></li>
@@ -249,19 +233,15 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; j
 <!-- HERO -->
 <div class="hero">
   <div class="hero-l">
-    <div class="eyebrow rv">
-      <span class="eyebrow-line"></span>
-      USC Computer Engineering & CS · A24 Semester Project
-    </div>
-    <h1 class="h-name rv d1">Sonya.</h1>
-    <div class="h-title rv d2">Engineer.<br>Builder. Founder.</div>
+    <h1 class="h-name rv">Sonya.</h1>
+    <div class="h-title rv d1" style="white-space:nowrap">Engineer. Builder. Founder.</div>
     <p class="hero-desc rv d2">Engineering & Tech lead on 7 Degrees — building the trust infrastructure that makes global hardware manufacturing safe for founders.</p>
     <div class="hero-pills rv d3">
-      <span class="pill g">Databricks · Summer 2025</span>
+      <span class="pill g">Databricks · Summer 2026</span>
       <span class="pill">Bloomberg · prev.</span>
       <span class="pill">USC '26</span>
     </div>
-    <div class="scroll-cta rv d3" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <div class="scroll-cta rv d3" onclick="document.getElementById('project').scrollIntoView({behavior:'smooth'})">
       <div class="scroll-ring">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2.5 7.5L6 11l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
@@ -270,62 +250,61 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; j
   </div>
 
   <div class="hero-r">
-    <div class="hs rv"><div class="hs-n">$250<em>M</em></div><div class="hs-l">Total Addressable Market</div></div>
-    <div class="hs rv d1"><div class="hs-n">10<em>×</em></div><div class="hs-l">Revenue growth in 36 months</div></div>
-    <div class="hs rv d2"><div class="hs-n">100<em>+</em></div><div class="hs-l">Founders building on 7°</div></div>
+    <div class="eyebrow light rv" style="margin-bottom:2rem"><span class="eyebrow-line"></span>Experience</div>
+    <div class="hero-exp rv d1">
+      <div class="hxp-item">
+        <img src="databricks.png" alt="Databricks" class="hxp-logo">
+        <div class="hxp-c">
+          <div class="hxp-role">Engineering Intern</div>
+          <div class="hxp-co">Databricks · San Francisco</div>
+        </div>
+        <span class="hxp-date act">May 2026</span>
+      </div>
+      <div class="hxp-item">
+        <img src="bloomberg.png" alt="Bloomberg" class="hxp-logo">
+        <div class="hxp-c">
+          <div class="hxp-role">Software Engineer Intern</div>
+          <div class="hxp-co">Bloomberg LP · New York</div>
+        </div>
+        <span class="hxp-date">Jun – Aug 2025</span>
+      </div>
+      <div class="hxp-item">
+        <img src="lavalab.png" alt="USC LavaLab" class="hxp-logo">
+        <div class="hxp-c">
+          <div class="hxp-role" title="Technical Founder → Director of Industry & Sponsorship → President">President, USC LavaLab</div>
+          <div class="hxp-co">Los Angeles, CA</div>
+        </div>
+        <span class="hxp-date act">2025 – Now</span>
+      </div>
+      <div class="hxp-item">
+        <img src="makers.png" alt="USC Makers" class="hxp-logo">
+        <div class="hxp-c">
+          <div class="hxp-role">Software Developer</div>
+          <div class="hxp-co">USC Makers · Los Angeles</div>
+        </div>
+        <span class="hxp-date act">2023 – Now</span>
+      </div>
+      <div class="hxp-item">
+        <img src="bloomberg.png" alt="Bloomberg" class="hxp-logo">
+        <div class="hxp-c">
+          <div class="hxp-role">Software Engineer Intern</div>
+          <div class="hxp-co">Bloomberg LP · New York</div>
+        </div>
+        <span class="hxp-date">Jun – Aug 2024</span>
+      </div>
+      <div class="hxp-item">
+        <img src="emotiv.png" alt="EMOTIV" class="hxp-logo">
+        <div class="hxp-c">
+          <div class="hxp-role">Research Intern</div>
+          <div class="hxp-co">EMOTIV · San Francisco</div>
+        </div>
+        <span class="hxp-date">Prev.</span>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ABOUT -->
-<section class="sec wh" id="about">
-  <div class="eyebrow rv"><span class="eyebrow-line"></span>About Me</div>
-  <div class="about-grid">
-    <div class="al rv">
-      <div class="a-name">Sonya</div>
-      <div class="a-badge">Engineering & Tech Lead · 7 Degrees</div>
-      <p class="a-bio">I'm a junior at the <strong>University of Southern California</strong> studying <strong>Computer Engineering and Computer Science</strong>, deeply immersed in the founder-builder ecosystem.</p>
-      <p class="a-bio">This summer, I'll be working on <strong>LLM-powered testing at Databricks</strong>. Previously, I built financial platforms and AI-driven validation systems at <strong>Bloomberg</strong>.</p>
-      <div class="skills-h">Technical Skills</div>
-      <div class="skills-row">
-        <span class="sk">Platform Architecture</span>
-        <span class="sk">Full-Stack Dev</span>
-        <span class="sk">LLM Systems</span>
-        <span class="sk">API Design</span>
-        <span class="sk">Trust & Matching Algorithms</span>
-        <span class="sk">Financial Systems</span>
-        <span class="sk">AI Validation</span>
-        <span class="sk">Hardware × Software</span>
-      </div>
-    </div>
 
-    <div class="ar rv d1">
-      <div class="xp-card">
-        <div class="xp-logo" style="background:#FF3621">DB</div>
-        <div class="xp-c">
-          <div class="xp-role">LLM-Powered Testing Intern</div>
-          <div class="xp-co">Databricks · Summer 2025</div>
-        </div>
-        <span class="xp-tag up">Upcoming</span>
-      </div>
-      <div class="xp-card">
-        <div class="xp-logo" style="background:#1b1b1b">BB</div>
-        <div class="xp-c">
-          <div class="xp-role">Financial Platforms & AI Validation</div>
-          <div class="xp-co">Bloomberg · Previous</div>
-        </div>
-        <span class="xp-tag pr">Previous</span>
-      </div>
-      <div class="xp-card">
-        <div class="xp-logo" style="background:var(--g2); color:var(--g7)">7°</div>
-        <div class="xp-c">
-          <div class="xp-role">Engineering & Tech Lead</div>
-          <div class="xp-co">7 Degrees · USC A24 Semester Project</div>
-        </div>
-        <span class="xp-tag pr">Project</span>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- PROBLEM -->
 <section class="sec dk" id="project">
@@ -475,9 +454,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; j
     </div>
     <div class="cs-r">
       <div class="clinks rv">
-        <a href="mailto:your@usc.edu" class="clink"><div><div class="clink-l">Email</div><div class="clink-s">your@usc.edu</div></div><span class="clink-arr">→</span></a>
-        <a href="https://linkedin.com/in/yourhandle" class="clink"><div><div class="clink-l">LinkedIn</div><div class="clink-s">linkedin.com/in/yourhandle</div></div><span class="clink-arr">→</span></a>
-        <a href="https://github.com/yourhandle" class="clink"><div><div class="clink-l">GitHub</div><div class="clink-s">github.com/yourhandle</div></div><span class="clink-arr">→</span></a>
+        <a href="mailto:salexis@usc.edu" class="clink"><div><div class="clink-l">Email</div><div class="clink-s">salexis@usc.edu</div></div><span class="clink-arr">→</span></a>
+        <a href="https://www.linkedin.com/in/sonya-alexis/" class="clink"><div><div class="clink-l">LinkedIn</div><div class="clink-s">linkedin.com/in/sonya-alexis</div></div><span class="clink-arr">→</span></a>
+        <a href="https://github.com/Sonyaal" class="clink"><div><div class="clink-l">GitHub</div><div class="clink-s">github.com/Sonyaal</div></div><span class="clink-arr">→</span></a>
       </div>
     </div>
   </div>
