@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sonya — USC CS/CE · 7 Degrees</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+:root {
+  --g0: #0a1a0f; --g1: #112215; --g2: #1a3a22; --g3: #2d6040;
+  --g4: #3d8a58; --g5: #52b870; --g6: #7dd19a; --g7: #b4e8c4; --g8: #e2f5e8;
+  --cream: #f5f2ed; --paper: #faf8f5;
+  --ink: #111110; --ink2: #3a3935; --ink3: #7a7870; --ink4: #b0aea8;
+  --rule: rgba(0,0,0,0.07); --rule2: rgba(0,0,0,0.04);
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Geist', system-ui, sans-serif;
+}
+body { font-family: var(--sans); background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+.cursor { width: 8px; height: 8px; background: var(--g4); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .15s, height .15s, background .15s, border .15s; }
+.cursor.big { width: 28px; height: 28px; background: transparent; border: 1.5px solid var(--g4); }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 0 3.5rem; height: 58px; background: rgba(250,248,245,0.88); backdrop-filter: blur(18px); border-bottom: 1px solid var(--rule); }
+.nav-name { font-family: var(--serif); font-size: 1.1rem; letter-spacing: -0.01em; color: var(--ink); display: flex; align-items: center; gap: 0.6rem; }
+.ndot { width: 6px; height: 6px; background: var(--g5); border-radius: 50%; display: inline-block; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink3); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--g3); }
+
+/* HERO */
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 58px; }
+.hero-l { display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 5rem 5rem; }
+.hero-r { background: var(--g0); display: flex; flex-direction: column; justify-content: flex-end; padding: 5rem 4rem; position: relative; overflow: hidden; }
+.hero-r::after { content: '7°'; position: absolute; bottom: -0.2em; right: -0.05em; font-family: var(--serif); font-size: 24rem; line-height: 1; color: rgba(255,255,255,0.03); pointer-events: none; user-select: none; }
+
+.eyebrow { display: flex; align-items: center; gap: 0.75rem; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--g4); margin-bottom: 1.8rem; }
+.eyebrow-line { width: 2rem; height: 1px; background: var(--g5); flex-shrink: 0; }
+.eyebrow.light { color: var(--g6); }
+.eyebrow.light .eyebrow-line { background: var(--g6); }
+
+.h-name { font-family: var(--serif); font-size: clamp(3.5rem, 5.5vw, 6rem); font-weight: 400; font-style: italic; line-height: 1; letter-spacing: -0.03em; color: var(--ink); }
+.h-title { font-family: var(--serif); font-size: clamp(2.2rem, 3.5vw, 3.8rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 2rem; }
+.hero-desc { font-size: 1rem; font-weight: 300; color: var(--ink3); line-height: 1.8; max-width: 400px; margin-bottom: 2.5rem; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3rem; }
+.pill { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.03em; padding: 0.4rem 1rem; border: 1px solid var(--rule); color: var(--ink2); border-radius: 999px; background: var(--cream); }
+.pill.g { background: var(--g8); border-color: var(--g7); color: var(--g2); }
+.scroll-cta { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink4); cursor: pointer; }
+.scroll-ring { width: 30px; height: 30px; border: 1px solid var(--ink4); border-radius: 50%; display: grid; place-items: center; }
+.scroll-ring svg { animation: bob 2s ease infinite; }
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
+
+.hs { margin-bottom: 2.5rem; position: relative; z-index: 1; }
+.hs-n { font-family: var(--serif); font-size: 3.8rem; color: #fff; line-height: 1; margin-bottom: 0.3rem; }
+.hs-n em { color: var(--g6); font-style: normal; }
+.hs-l { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; }
+
+/* SECTIONS */
+.sec { padding: 7rem 5rem; }
+.sec.dk { background: var(--g0); }
+.sec.cr { background: var(--cream); }
+.sec.wh { background: #fff; }
+
+.sec-h { font-family: var(--serif); font-size: clamp(2rem, 3vw, 3.2rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.5rem; }
+.sec-h em { font-style: italic; color: var(--g3); }
+.sec-h.lt { color: #fff; }
+.sec-h.lt em { color: var(--g6); }
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 3rem; }
+.al { padding-right: 5rem; border-right: 1px solid var(--rule); }
+.ar { padding-left: 5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+.a-name { font-family: var(--serif); font-size: 4.5rem; font-weight: 400; line-height: 0.95; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 0.5rem; }
+.a-badge { display: inline-block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g3); background: var(--g8); border: 1px solid var(--g7); padding: 0.35rem 0.9rem; border-radius: 999px; margin-bottom: 2rem; }
+.a-bio { font-size: 1rem; font-weight: 300; color: var(--ink2); line-height: 1.85; margin-bottom: 1.5rem; }
+.a-bio strong { font-weight: 500; color: var(--ink); }
+
+.skills-h { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink4); margin-bottom: 0.9rem; margin-top: 1rem; }
+.skills-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.sk { font-size: 0.76rem; padding: 0.35rem 0.85rem; border: 1px solid var(--rule); color: var(--ink2); background: var(--paper); }
+
+.xp-card { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.5rem; border: 1px solid var(--rule); transition: border-color .2s, background .2s; }
+.xp-card:hover { border-color: var(--g7); background: var(--g8); }
+.xp-logo { width: 38px; height: 38px; border-radius: 8px; display: grid; place-items: center; flex-shrink: 0; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; color: #fff; }
+.xp-c { flex: 1; }
+.xp-role { font-size: 0.87rem; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+.xp-co { font-size: 0.76rem; color: var(--ink3); }
+.xp-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: 999px; white-space: nowrap; }
+.xp-tag.up { background: var(--g8); color: var(--g2); border: 1px solid var(--g7); }
+.xp-tag.pr { background: var(--cream); color: var(--ink3); border: 1px solid var(--rule); }
+
+/* PROBLEM */
+.prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 3.5rem; background: rgba(255,255,255,0.05); }
+.pc { background: var(--g1); padding: 3rem; }
+.pc-n { font-family: var(--serif); font-size: 5rem; line-height: 1; color: var(--g5); margin-bottom: 1.5rem; }
+.pc h3 { font-size: 0.95rem; font-weight: 500; color: #fff; margin-bottom: 0.75rem; }
+.pc p { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.48); line-height: 1.8; }
+.qcard { grid-column: 1/-1; background: var(--g2); padding: 3rem; display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: start; }
+.qm { font-family: var(--serif); font-size: 5rem; line-height: 0.75; color: var(--g5); user-select: none; flex-shrink: 0; }
+.qt { font-family: var(--serif); font-size: 1.2rem; font-style: italic; color: rgba(255,255,255,0.78); line-height: 1.7; margin-bottom: 1rem; }
+.qa { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g6); }
+
+/* SOLUTION */
+.sol-lead { font-family: var(--serif); font-size: 1.3rem; font-style: italic; color: var(--ink2); line-height: 1.65; max-width: 620px; margin-bottom: 3.5rem; padding-left: 1.75rem; border-left: 2px solid var(--g4); }
+.feats { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--rule); }
+.ft { padding: 2.5rem; border-right: 1px solid var(--rule); transition: background .22s; cursor: default; }
+.ft:last-child { border-right: none; }
+.ft:hover { background: var(--g0); }
+.ft:hover .ft-t { color: #fff; }
+.ft:hover .ft-d { color: rgba(255,255,255,0.48); }
+.ft:hover .ft-i { color: var(--g6); }
+.ft-i { font-family: var(--serif); font-style: italic; font-size: 0.9rem; color: var(--g4); margin-bottom: 1.5rem; transition: color .2s; }
+.ft-t { font-size: 0.92rem; font-weight: 500; color: var(--ink); margin-bottom: 0.7rem; transition: color .2s; }
+.ft-d { font-size: 0.83rem; font-weight: 300; color: var(--ink3); line-height: 1.78; transition: color .2s; }
+
+/* ROLE */
+.role-grid { display: grid; grid-template-columns: 1fr 0.75fr; gap: 5rem; margin-top: 3.5rem; align-items: start; }
+.ri-list {}
+.ri { display: grid; grid-template-columns: 2rem 1fr; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid var(--rule); }
+.ri:first-child { padding-top: 0; }
+.ri:last-child { border-bottom: none; }
+.rn { font-family: var(--serif); font-style: italic; color: var(--g5); font-size: 0.88rem; padding-top: 0.1rem; }
+.rc h4 { font-size: 0.9rem; font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; }
+.rc p { font-size: 0.83rem; font-weight: 300; color: var(--ink3); line-height: 1.78; }
+.tp { background: var(--g0); padding: 2.5rem; }
+.tp-h { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 2rem; }
+.tpi { margin-bottom: 1.5rem; }
+.tpi:last-child { margin-bottom: 0; }
+.tpi-top { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+.tpi-name { font-size: 0.8rem; color: rgba(255,255,255,0.65); }
+.tpi-pct { font-size: 0.8rem; color: var(--g6); }
+.tpi-track { height: 2px; background: rgba(255,255,255,0.07); }
+.tpi-fill { height: 100%; background: var(--g5); }
+
+/* MARKET */
+.mkt-rings { display: flex; align-items: center; justify-content: center; padding: 4rem 0 2rem; }
+.mr { border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.mr-tam { width: 300px; height: 300px; background: var(--g0); border: 1.5px solid var(--g3); }
+.mr-sam { width: 210px; height: 210px; background: var(--g2); border: 1.5px solid var(--g4); margin-left: -55px; z-index: 1; }
+.mr-som { width: 130px; height: 130px; background: var(--g4); margin-left: -35px; z-index: 2; }
+.mr-l { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.38); margin-bottom: 0.35rem; }
+.mr-v { font-family: var(--serif); font-size: 2.2rem; color: #fff; line-height: 1; }
+.mr-tam .mr-v { font-size: 2.8rem; }
+.mr-som .mr-v { font-size: 1.5rem; }
+.mr-d { font-size: 0.6rem; color: rgba(255,255,255,0.38); margin-top: 0.4rem; text-align: center; padding: 0 0.8rem; line-height: 1.45; }
+.sources { display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center; }
+.src { font-size: 0.68rem; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 0.25rem 0.7rem; }
+
+/* FINANCIALS */
+.fin-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--rule); margin-top: 3.5rem; }
+.fc { padding: 3rem 2.5rem; border-right: 1px solid var(--rule); position: relative; }
+.fc:last-child { border-right: none; }
+.fc-top { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--rule); }
+.fc-top.g { background: var(--g4); }
+.fc-yr { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink4); margin-bottom: 2rem; }
+.fc-rev { font-family: var(--serif); font-size: 3rem; line-height: 1; color: var(--ink); margin-bottom: 0.3rem; }
+.fc-rl { font-size: 0.74rem; color: var(--ink3); margin-bottom: 2rem; }
+.fc-ebitda { font-family: var(--serif); font-size: 1.6rem; margin-bottom: 0.25rem; }
+.fc-ebitda.neg { color: #c94040; }
+.fc-ebitda.pos { color: var(--g3); }
+.fc-ebitda.mid { color: #a07020; }
+.fc-el { font-size: 0.72rem; color: var(--ink4); margin-bottom: 2rem; }
+.fc-ml { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--ink4); margin-bottom: 0.4rem; }
+.fc-track { height: 2px; background: var(--rule); }
+.fc-fill { height: 100%; background: var(--g4); }
+
+/* COMPETITIVE */
+.ct-wrap { margin-top: 3.5rem; overflow-x: auto; }
+.ct { width: 100%; border-collapse: collapse; }
+.ct th, .ct td { padding: 1rem 1.5rem; text-align: center; border: 1px solid var(--rule); font-size: 0.82rem; }
+.ct th { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; background: var(--ink); color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.07); }
+.ct th:first-child { text-align: left; min-width: 180px; }
+.ct th.hl { background: var(--g2); color: var(--g6); }
+.ct td:first-child { text-align: left; font-weight: 500; color: var(--ink); font-size: 0.84rem; }
+.ct td.hl { background: var(--g8); }
+.ck { color: var(--g4); }
+.cx { color: var(--ink4); }
+
+/* WHY NOW */
+.wn-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 3.5rem; background: rgba(255,255,255,0.05); }
+.wni { background: var(--g1); padding: 3rem 2.5rem; transition: background .22s; }
+.wni:hover { background: var(--g2); }
+.wni-i { font-family: var(--serif); font-style: italic; font-size: 0.88rem; color: var(--g6); margin-bottom: 2rem; }
+.wni h3 { font-size: 0.92rem; font-weight: 500; color: #fff; margin-bottom: 0.75rem; }
+.wni p { font-size: 0.83rem; font-weight: 300; color: rgba(255,255,255,0.48); line-height: 1.78; }
+
+/* CONTACT */
+.contact-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 45vh; }
+.cs-l { background: var(--g0); padding: 7rem 5rem; display: flex; flex-direction: column; justify-content: center; }
+.cs-r { background: var(--cream); padding: 7rem 5rem; display: flex; flex-direction: column; justify-content: center; }
+.c-h { font-family: var(--serif); font-size: clamp(2.5rem, 3.8vw, 4rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.025em; color: #fff; margin-bottom: 1.5rem; }
+.c-h em { font-style: italic; color: var(--g6); }
+.c-sub { font-size: 0.9rem; font-weight: 300; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 340px; }
+.clinks { display: flex; flex-direction: column; gap: 1rem; }
+.clink { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 1.75rem; border: 1px solid var(--rule); text-decoration: none; transition: border-color .2s, background .2s; }
+.clink:hover { border-color: var(--g6); background: var(--g8); }
+.clink-l { font-size: 0.88rem; font-weight: 500; color: var(--ink); }
+.clink-s { font-size: 0.74rem; color: var(--ink3); margin-top: 0.2rem; }
+.clink-arr { font-size: 1rem; color: var(--ink4); transition: transform .2s, color .2s; }
+.clink:hover .clink-arr { transform: translateX(4px); color: var(--g4); }
+.footer { background: var(--ink); padding: 1.2rem 5rem; display: flex; justify-content: space-between; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+
+/* REVEAL */
+.rv { opacity: 0; transform: translateY(26px); transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1); }
+.rv.in { opacity: 1; transform: none; }
+.rv.d1 { transition-delay: .1s; }
+.rv.d2 { transition-delay: .2s; }
+.rv.d3 { transition-delay: .3s; }
+
+@media (max-width: 900px) {
+  nav { padding: 0 1.5rem; }
+  .nav-links { gap: 1.2rem; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-r { display: none; }
+  .hero-l { padding: 5rem 2rem 4rem; }
+  .sec { padding: 5rem 2rem; }
+  .about-grid { grid-template-columns: 1fr; }
+  .al { padding-right: 0; border-right: none; border-bottom: 1px solid var(--rule); padding-bottom: 3rem; }
+  .ar { padding-left: 0; }
+  .prob-grid, .feats, .role-grid, .wn-grid, .fin-grid, .contact-split { grid-template-columns: 1fr; }
+  .ft { border-right: none; border-bottom: 1px solid var(--rule); }
+  .fc { border-right: none; border-bottom: 1px solid var(--rule); }
+  .mkt-rings { flex-direction: column; gap: 1rem; }
+  .mr-sam, .mr-som { margin-left: 0; }
+  .cs-l, .cs-r { padding: 4rem 2rem; }
+  .footer { padding: 1.2rem 2rem; flex-direction: column; gap: 0.4rem; }
+  .qcard { grid-template-columns: auto 1fr; gap: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <div class="nav-name">Sonya <span class="ndot"></span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#project">Project</a></li>
+    <li><a href="#role">My Role</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#financials">Financials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-l">
+    <div class="eyebrow rv">
+      <span class="eyebrow-line"></span>
+      USC Computer Engineering & CS · A24 Semester Project
+    </div>
+    <h1 class="h-name rv d1">Sonya.</h1>
+    <div class="h-title rv d2">Engineer.<br>Builder. Founder.</div>
+    <p class="hero-desc rv d2">Engineering & Tech lead on 7 Degrees — building the trust infrastructure that makes global hardware manufacturing safe for founders.</p>
+    <div class="hero-pills rv d3">
+      <span class="pill g">Databricks · Summer 2025</span>
+      <span class="pill">Bloomberg · prev.</span>
+      <span class="pill">USC '26</span>
+    </div>
+    <div class="scroll-cta rv d3" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+      <div class="scroll-ring">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2.5 7.5L6 11l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      Scroll to explore
+    </div>
+  </div>
+
+  <div class="hero-r">
+    <div class="hs rv"><div class="hs-n">$250<em>M</em></div><div class="hs-l">Total Addressable Market</div></div>
+    <div class="hs rv d1"><div class="hs-n">10<em>×</em></div><div class="hs-l">Revenue growth in 36 months</div></div>
+    <div class="hs rv d2"><div class="hs-n">100<em>+</em></div><div class="hs-l">Founders building on 7°</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec wh" id="about">
+  <div class="eyebrow rv"><span class="eyebrow-line"></span>About Me</div>
+  <div class="about-grid">
+    <div class="al rv">
+      <div class="a-name">Sonya</div>
+      <div class="a-badge">Engineering & Tech Lead · 7 Degrees</div>
+      <p class="a-bio">I'm a junior at the <strong>University of Southern California</strong> studying <strong>Computer Engineering and Computer Science</strong>, deeply immersed in the founder-builder ecosystem.</p>
+      <p class="a-bio">This summer, I'll be working on <strong>LLM-powered testing at Databricks</strong>. Previously, I built financial platforms and AI-driven validation systems at <strong>Bloomberg</strong>.</p>
+      <div class="skills-h">Technical Skills</div>
+      <div class="skills-row">
+        <span class="sk">Platform Architecture</span>
+        <span class="sk">Full-Stack Dev</span>
+        <span class="sk">LLM Systems</span>
+        <span class="sk">API Design</span>
+        <span class="sk">Trust & Matching Algorithms</span>
+        <span class="sk">Financial Systems</span>
+        <span class="sk">AI Validation</span>
+        <span class="sk">Hardware × Software</span>
+      </div>
+    </div>
+
+    <div class="ar rv d1">
+      <div class="xp-card">
+        <div class="xp-logo" style="background:#FF3621">DB</div>
+        <div class="xp-c">
+          <div class="xp-role">LLM-Powered Testing Intern</div>
+          <div class="xp-co">Databricks · Summer 2025</div>
+        </div>
+        <span class="xp-tag up">Upcoming</span>
+      </div>
+      <div class="xp-card">
+        <div class="xp-logo" style="background:#1b1b1b">BB</div>
+        <div class="xp-c">
+          <div class="xp-role">Financial Platforms & AI Validation</div>
+          <div class="xp-co">Bloomberg · Previous</div>
+        </div>
+        <span class="xp-tag pr">Previous</span>
+      </div>
+      <div class="xp-card">
+        <div class="xp-logo" style="background:var(--g2); color:var(--g7)">7°</div>
+        <div class="xp-c">
+          <div class="xp-role">Engineering & Tech Lead</div>
+          <div class="xp-co">7 Degrees · USC A24 Semester Project</div>
+        </div>
+        <span class="xp-tag pr">Project</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="sec dk" id="project">
+  <div class="eyebrow light rv"><span class="eyebrow-line"></span>The Problem</div>
+  <h2 class="sec-h lt rv">Why founders keep <em>getting burned</em><br>by overseas manufacturing</h2>
+  <div class="prob-grid rv d1">
+    <div class="pc">
+      <div class="pc-n">90%</div>
+      <h3>Production Has Gone Global</h3>
+      <p>90% of North American manufacturers moved production internationally in the past five years — yet the trust infrastructure to support this shift is still broker-driven and opaque.</p>
+    </div>
+    <div class="pc">
+      <div class="pc-n">~55%</div>
+      <h3>Most Fail Their Goals</h3>
+      <p>Only ~55% of those companies hit their cost and speed objectives. For early-stage hardware founders with no institutional contacts, the odds are far worse.</p>
+    </div>
+    <div class="qcard">
+      <div class="qm">"</div>
+      <div>
+        <p class="qt">We spent 3 months trying to find a contract manufacturer. We got burned twice — one ghosted us after sampling, another shipped 200 units that failed QC.</p>
+        <div class="qa">Early-stage IoT Founder · 2-person team · Mom Test Interview</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="sec cr" id="solution">
+  <div class="eyebrow rv"><span class="eyebrow-line"></span>The Solution</div>
+  <h2 class="sec-h rv">7 Degrees — <em>trust built in</em></h2>
+  <p class="sol-lead rv d1">7 Degrees connects hardware companies with a network of verified global manufacturers, making overseas production trusted and accessible. From prototype to product.</p>
+  <div class="feats rv d2">
+    <div class="ft">
+      <div class="ft-i">01 —</div>
+      <div class="ft-t">Trust-Based Network</div>
+      <p class="ft-d">Every manufacturer is rigorously onboarded, continuously monitored, and strictly enforced. Violations get removed — no exceptions.</p>
+    </div>
+    <div class="ft">
+      <div class="ft-i">02 —</div>
+      <div class="ft-t">Reputation Profiles</div>
+      <p class="ft-d">Ratings, reviews, mutual connections, and verified certifications so founders know exactly who they're partnering with before committing.</p>
+    </div>
+    <div class="ft">
+      <div class="ft-i">03 —</div>
+      <div class="ft-t">Full Workflow</div>
+      <p class="ft-d">Discovery, matching, messaging, calls, IP-protected contracts, and ongoing quality monitoring — the entire partnership in one place.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROLE -->
+<section class="sec wh" id="role">
+  <div class="eyebrow rv"><span class="eyebrow-line"></span>My Contribution</div>
+  <h2 class="sec-h rv">Engineering & <em>Tech Lead</em></h2>
+  <div class="role-grid">
+    <div class="rv d1">
+      <div class="ri">
+        <span class="rn">i.</span>
+        <div class="rc"><h4>Platform Architecture & VVP Iterations</h4><p>Led the technical design of all three VVP iterations — from V2 landing page through V3 with dynamic manufacturer profiles, trust scoring, and mutual connections display.</p></div>
+      </div>
+      <div class="ri">
+        <span class="rn">ii.</span>
+        <div class="rc"><h4>Trust & Matching Infrastructure</h4><p>Designed the backend logic for manufacturer vetting, trust score computation, and the matching algorithm pairing founders with the right overseas partner based on industry and network proximity.</p></div>
+      </div>
+      <div class="ri">
+        <span class="rn">iii.</span>
+        <div class="rc"><h4>IP Protection & Contract Systems</h4><p>Built the automated contract flow with 7° Pro-Gives IP layer — live agreements with prototype exclusivity, NDA enforcement, and automatic violation detection.</p></div>
+      </div>
+      <div class="ri">
+        <span class="rn">iv.</span>
+        <div class="rc"><h4>Network of Agents & Monitoring Pipeline</h4><p>Engineered the on-ground agent backend — manufacturer onboarding, audit scheduling, and automated enforcement workflows that remove bad actors.</p></div>
+      </div>
+    </div>
+    <div class="tp rv d2">
+      <div class="tp-h">Technical Proficiency</div>
+      <div class="tpi"><div class="tpi-top"><span class="tpi-name">Web Platform Dev</span><span class="tpi-pct">92%</span></div><div class="tpi-track"><div class="tpi-fill" style="width:92%"></div></div></div>
+      <div class="tpi"><div class="tpi-top"><span class="tpi-name">Backend & API Systems</span><span class="tpi-pct">86%</span></div><div class="tpi-track"><div class="tpi-fill" style="width:86%"></div></div></div>
+      <div class="tpi"><div class="tpi-top"><span class="tpi-name">LLM Systems</span><span class="tpi-pct">82%</span></div><div class="tpi-track"><div class="tpi-fill" style="width:82%"></div></div></div>
+      <div class="tpi"><div class="tpi-top"><span class="tpi-name">Algorithm Design</span><span class="tpi-pct">80%</span></div><div class="tpi-track"><div class="tpi-fill" style="width:80%"></div></div></div>
+      <div class="tpi"><div class="tpi-top"><span class="tpi-name">UI/UX Prototyping</span><span class="tpi-pct">78%</span></div><div class="tpi-track"><div class="tpi-fill" style="width:78%"></div></div></div>
+      <div class="tpi"><div class="tpi-top"><span class="tpi-name">Contract Automation</span><span class="tpi-pct">74%</span></div><div class="tpi-track"><div class="tpi-fill" style="width:74%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET -->
+<section class="sec dk" id="market">
+  <div class="eyebrow light rv"><span class="eyebrow-line"></span>Market Size</div>
+  <h2 class="sec-h lt rv">A <em>$250M</em> addressable market</h2>
+  <div class="mkt-rings rv d1">
+    <div class="mr mr-tam"><div class="mr-l">TAM</div><div class="mr-v">$250M</div><div class="mr-d">All global hardware cos without in-house manufacturing</div></div>
+    <div class="mr mr-sam"><div class="mr-l">SAM</div><div class="mr-v">$150M</div><div class="mr-d">Open to India & China outsourcing</div></div>
+    <div class="mr mr-som"><div class="mr-l">SOM</div><div class="mr-v">$7.5M</div><div class="mr-d">Reachable in 3 yrs</div></div>
+  </div>
+  <div class="sources rv d2">
+    <span class="src">Deloitte</span><span class="src">E2OPEN</span><span class="src">DOIT</span><span class="src">Demand Sage</span><span class="src">BCG Survey</span>
+  </div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="sec cr" id="financials">
+  <div class="eyebrow rv"><span class="eyebrow-line"></span>Pro Forma</div>
+  <h2 class="sec-h rv"><em>10×</em> revenue in 36 months</h2>
+  <div class="fin-grid rv d1">
+    <div class="fc"><div class="fc-top"></div><div class="fc-yr">FY2026 · Jun'25 – May'26</div><div class="fc-rev">$130K</div><div class="fc-rl">Total Revenue · 24 customers</div><div class="fc-ebitda neg">($107K)</div><div class="fc-el">EBITDA · Investment Phase</div><div class="fc-ml"><span>Gross Margin</span><span>42.3%</span></div><div class="fc-track"><div class="fc-fill" style="width:42.3%"></div></div></div>
+    <div class="fc"><div class="fc-top"></div><div class="fc-yr">FY2027 · Jun'26 – May'27</div><div class="fc-rev">$510K</div><div class="fc-rl">Total Revenue · 73 customers</div><div class="fc-ebitda mid">$9K</div><div class="fc-el">EBITDA · Near Breakeven</div><div class="fc-ml"><span>Gross Margin</span><span>54.7%</span></div><div class="fc-track"><div class="fc-fill" style="width:54.7%"></div></div></div>
+    <div class="fc"><div class="fc-top g"></div><div class="fc-yr">FY2028 · Jun'27 – May'28</div><div class="fc-rev">$1.25M</div><div class="fc-rl">Total Revenue · 165 customers</div><div class="fc-ebitda pos">$375K</div><div class="fc-el">EBITDA · Net Positive · 30.1%</div><div class="fc-ml"><span>Gross Margin</span><span>58.5%</span></div><div class="fc-track"><div class="fc-fill" style="width:58.5%"></div></div></div>
+  </div>
+</section>
+
+<!-- COMPETITIVE -->
+<section class="sec wh" id="competitive">
+  <div class="eyebrow rv"><span class="eyebrow-line"></span>Competitive Landscape</div>
+  <h2 class="sec-h rv">The only <em>complete, trust-first</em> platform</h2>
+  <div class="ct-wrap rv d1">
+    <table class="ct">
+      <thead><tr><th>Feature</th><th class="hl">7° Degrees</th><th>Thomas</th><th>Alibaba</th><th>Xometry</th><th>Maker's Row</th></tr></thead>
+      <tbody>
+        <tr><td>Trust-Based Network</td><td class="hl"><span class="ck">✓</span></td><td><span class="cx">—</span></td><td><span class="cx">—</span></td><td><span class="cx">—</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>Reputation Profiles</td><td class="hl"><span class="ck">✓</span></td><td><span class="cx">—</span></td><td><span class="ck">✓</span></td><td><span class="cx">—</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>Full Workflow Facilitation</td><td class="hl"><span class="ck">✓</span></td><td><span class="cx">—</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="cx">—</span></td></tr>
+        <tr><td>Relationship First</td><td class="hl"><span class="ck">✓</span></td><td><span class="cx">—</span></td><td><span class="cx">—</span></td><td><span class="cx">—</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td>Wide Range of Industries</td><td class="hl"><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="cx">—</span></td><td><span class="cx">—</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section class="sec dk">
+  <div class="eyebrow light rv"><span class="eyebrow-line"></span>Why Now</div>
+  <h2 class="sec-h lt rv">Three tailwinds <em>converging</em></h2>
+  <div class="wn-grid rv d1">
+    <div class="wni"><div class="wni-i">i.</div><h3>Rise of Early-Stage Hardware</h3><p>More founders are building consumer hardware and IoT products as the SaaS-pocalypse drives talent back to physical products.</p></div>
+    <div class="wni"><div class="wni-i">ii.</div><h3>Supply Chains Are Shifting</h3><p>Companies are moving production from China to India and Vietnam — creating massive new sourcing demand without adequate trust infrastructure.</p></div>
+    <div class="wni"><div class="wni-i">iii.</div><h3>Trust Infrastructure Is Archaic</h3><p>Sourcing is still driven by brokers and word of mouth. No modern, scalable, trust-first platform exists for early-stage hardware founders.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="contact-split">
+    <div class="cs-l">
+      <div class="eyebrow light rv"><span class="eyebrow-line"></span>Get In Touch</div>
+      <h2 class="c-h rv">Let's build <em>something</em> together.</h2>
+      <p class="c-sub rv d1">Interested in hardware, platform engineering, LLM systems, or supply chain trust? I'd love to connect.</p>
+    </div>
+    <div class="cs-r">
+      <div class="clinks rv">
+        <a href="mailto:your@usc.edu" class="clink"><div><div class="clink-l">Email</div><div class="clink-s">your@usc.edu</div></div><span class="clink-arr">→</span></a>
+        <a href="https://linkedin.com/in/yourhandle" class="clink"><div><div class="clink-l">LinkedIn</div><div class="clink-s">linkedin.com/in/yourhandle</div></div><span class="clink-arr">→</span></a>
+        <a href="https://github.com/yourhandle" class="clink"><div><div class="clink-l">GitHub</div><div class="clink-s">github.com/yourhandle</div></div><span class="clink-arr">→</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span>Sonya · USC Computer Engineering & CS · Class of 2026</span>
+    <span>7 Degrees · A24 Semester Project · Engineering & Tech Lead</span>
+  </div>
+</div>
+
+<script>
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => { cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; });
+document.querySelectorAll('a, .ft, .wni, .xp-card, .scroll-cta').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('big'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+});
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+document.querySelectorAll('.hero .rv').forEach((el, i) => setTimeout(() => el.classList.add('in'), 150 + i * 75));
+</script>
+</body>
+</html>
